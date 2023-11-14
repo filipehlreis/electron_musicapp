@@ -32,5 +32,9 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "jquery": "^3.7.1",
+    "music-metadata": "^7.14.0"
   }
 }

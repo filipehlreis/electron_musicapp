@@ -9,6 +9,7 @@ app.on('ready', () => {
     width: 400,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
     },
   });
 
