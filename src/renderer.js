@@ -2,6 +2,7 @@ const $ = require('jquery');
 const mm = require('music-metadata');
 let songData = { path: [], title: [] };
 let audioPlayer = $('audio').get(0);
+let playing = false;
 
 const addButton = document.getElementById('add_button');
 const clearButton = document.getElementById('clear_button');
@@ -59,6 +60,33 @@ function playSong(index) {
   audioPlayer.src = songData.path[index];
   audioPlayer.load();
   audioPlayer.play();
+  playing = true;
+  $('h4').text(`${songData.title[index]}`);
+  updatePlayButton();
+}
+
+function play() {
+  if (playing) {
+    audioPlayer.pause();
+    playing = false;
+  } else {
+    audioPlayer.play();
+    playing = true;
+  }
+
+  updatePlayButton();
+}
+
+function updatePlayButton() {
+  let playIcon = $('#play_button span');
+
+  if (playing) {
+    playIcon.removeClass('icon-play');
+    playIcon.addClass('icon-pause');
+  } else {
+    playIcon.removeClass('icon-pause');
+    playIcon.addClass('icon-play');
+  }
 }
 
 clearButton.addEventListener('click', () => {
