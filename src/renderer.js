@@ -125,6 +125,20 @@ function playPrevious() {
   }
 }
 
+function clearPlaylist() {
+  clearInterval(timer);
+  $('#time-left').text('00:00');
+  $('#total-time').text('00:00');
+  $('#table-body').html('');
+  audioPlayer.pause();
+  audioPlayer.src = '';
+  currentIndex = 0;
+  playing = false;
+  songData = { path: [], title: [] };
+  $('h4').text('');
+  updatePlayButton();
+}
+
 clearButton.addEventListener('click', () => {
   console.log('clearButton');
 });
