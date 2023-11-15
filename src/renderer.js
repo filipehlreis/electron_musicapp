@@ -139,6 +139,11 @@ function clearPlaylist() {
   updatePlayButton();
 }
 
+function changeVolume(input) {
+  input.value;
+  audioPlayer.volume = input.value;
+}
+
 clearButton.addEventListener('click', () => {
   console.log('clearButton');
 });
