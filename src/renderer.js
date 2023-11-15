@@ -3,6 +3,8 @@ const mm = require('music-metadata');
 let songData = { path: [], title: [] };
 let audioPlayer = $('audio').get(0);
 let playing = false;
+let currentIndex = 0;
+let timer = null;
 
 const addButton = document.getElementById('add_button');
 const clearButton = document.getElementById('clear_button');
@@ -63,15 +65,20 @@ function playSong(index) {
   playing = true;
   $('h4').text(`${songData.title[index]}`);
   updatePlayButton();
+  currentIndex = index;
+
+  timer = setInterval(updateTime, 1000);
 }
 
 function play() {
   if (playing) {
     audioPlayer.pause();
+    clearInterval(timer);
     playing = false;
   } else {
     audioPlayer.play();
     playing = true;
+    timer = setInterval(updateTime, 1000);
   }
 
   updatePlayButton();
@@ -86,6 +93,35 @@ function updatePlayButton() {
   } else {
     playIcon.removeClass('icon-pause');
     playIcon.addClass('icon-play');
+  }
+}
+
+function playNext() {
+  if (songData.path.length) {
+    if (currentIndex < songData.path.length - 1) {
+      playSong(currentIndex + 1);
+    } else {
+      playSong(0);
+    }
+  }
+}
+
+function updateTime() {
+  $('#time-left').text(convertDurationFormat(audioPlayer.currentTime));
+  $('#total-time').text(convertDurationFormat(audioPlayer.duration));
+  if (audioPlayer.currentTime >= audioPlayer.duration) {
+    playNext();
+  }
+}
+
+function playPrevious() {
+  if (songData.path.length) {
+    console.log(currentIndex);
+    if (currentIndex > 0) {
+      playSong(currentIndex - 1);
+    } else {
+      playSong(currentIndex);
+    }
   }
 }
 
